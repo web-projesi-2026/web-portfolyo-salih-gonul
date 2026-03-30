@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeler — Salih Gönül</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .project-card[data-bg="web"] .project-card-header {
+      background: linear-gradient(135deg, #1a0830 0%, #0d1628 50%, #061820 100%);
+    }
+    [data-theme="light"] .project-card[data-bg="web"] .project-card-header {
+      background: linear-gradient(135deg, #f0d8f8 0%, #c8d8f4 100%);
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<header>
+  <a href="../index.html" class="logo">Salih <span>G.</span></a>
+  <div class="header-right">
+    <nav>
+      <a href="../index.html" data-num="01">Ana Sayfa</a>
+      <a href="about.html" data-num="02">Hakkında</a>
+      <a href="projeler.html" data-num="03">Projeler</a>
+      <a href="contact.html" data-num="04">İletişim</a>
+    </nav>
+    <button class="theme-toggle" aria-label="Tema değiştir">
+      <span class="icon-moon">☽</span>
+      <span class="icon-sun">☀</span>
+    </button>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-tag">Portfolyo</div>
+  <h1>Tüm <em>Projelerim</em></h1>
+</div>
+
+<div class="projects-content">
+
+  <div class="projects-filter reveal">
+    <button class="filter-btn active" data-filter="all">Tümü</button>
+    <button class="filter-btn" data-filter="web">Web</button>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-card reveal" data-category="web" data-bg="web">
+      <div class="project-card-header">
+        <div class="project-card-icon">🌐</div>
+      </div>
+      <div class="project-card-body">
+        <div class="project-card-num">Proje — 001 · 2026</div>
+        <div class="project-card-name">Portfolyo Sitesi</div>
+        <div class="project-card-desc">
+          Saf HTML, CSS ve JavaScript ile geliştirdiğim kişisel portfolyo sitesi. Özel cursor efekti, açık/koyu tema geçişi, scroll reveal animasyonları ve mobil uyumlu tasarım içeriyor.
+        </div>
+        <div class="project-card-tech">
+          <span class="tech-tag">HTML</span>
+          <span class="tech-tag">CSS</span>
+          <span class="tech-tag">JavaScript</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Salih Gönül — Tüm Hakları Saklıdır.</span>
+  <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
