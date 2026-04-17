@@ -25,7 +25,8 @@ Bu portfolyo sitesi aşağıdaki amaçlarla geliştirilmiştir:
 * 🔍 Aktif menü vurgulama
 * 📊 Yetenek gösterimi (skill bars / ikonlar)
 * 💼 Proje kartları
-* 📬 İletişim formu
+* 📄 Çok sayfalı yapı (About, Projects, Contact)
+* 📬 İletişim sayfası
 
 ---
 
@@ -43,15 +44,18 @@ Bu portfolyo sitesi aşağıdaki amaçlarla geliştirilmiştir:
 portfolio-site/
 │
 ├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   └── script.js
-├── images/
-│   ├── profile.jpg
-│   └── projects/
-└── assets/
-    └── icons/
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── main.js
+│
+├── pages/
+│   ├── about.html
+│   ├── projeler.html
+│   └── contact.html
+│
+└── README.md
 ```
 
 ---
@@ -79,10 +83,11 @@ cd portfolio-site
 Aşağıdaki alanları kendine göre düzenleyebilirsin:
 
 * 👤 İsim ve başlık (index.html)
-* 📝 Hakkımda kısmı
-* 💼 Projeler
-* 📷 Görseller (images klasörü)
-* 🔗 Sosyal medya linkleri
+* 📝 Hakkımda sayfası (pages/about.html)
+* 💼 Projeler (pages/projeler.html)
+* 📬 İletişim sayfası (pages/contact.html)
+* 🎨 Stil ayarları (assets/css/style.css)
+* ⚡ Script işlemleri (assets/js/main.js)
 
 ---
 
