@@ -32,8 +32,24 @@
       <span class="icon-moon">☽</span>
       <span class="icon-sun">☀</span>
     </button>
+    <button class="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+<!-- MOBİL MENÜ -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <nav class="mobile-nav">
+      <a href="../index.html" data-num="01">Ana Sayfa</a>
+      <a href="about.html" data-num="02">Hakkında</a>
+      <a href="projeler.html" data-num="03">Projeler</a>
+      <a href="contact.html" data-num="04">İletişim</a>
+    </nav>
+  </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
 <div class="page-hero">
   <div class="page-hero-tag">Portfolyo</div>
@@ -74,6 +90,9 @@
   <span class="footer-copy">© Tüm Hakları Saklıdır.</span>
   <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
 </footer>
+
+<!-- YUKARIYA ÇIK BUTONU -->
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukarıya çık" title="Yukarıya Çık">↑</button>
 
 <script src="../assets/js/main.js"></script>
 </body>
