@@ -24,8 +24,24 @@
       <span class="icon-moon">☽</span>
       <span class="icon-sun">☀</span>
     </button>
+    <button class="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+<!-- MOBİL MENÜ -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <nav class="mobile-nav">
+      <a href="index.html" data-num="01">Ana Sayfa</a>
+      <a href="pages/about.html" data-num="02">Hakkında</a>
+      <a href="pages/projeler.html" data-num="03">Projeler</a>
+      <a href="pages/contact.html" data-num="04">İletişim</a>
+    </nav>
+  </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -134,6 +150,108 @@
   </div>
 </section>
 
+<!-- SLIDER / TEKNOLOJİLER -->
+<section class="section" id="sliderSection" style="padding-top:0;">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Kullandığım<br><em>Teknolojiler</em></h2>
+  </div>
+  <div class="slider-wrapper reveal">
+    <button class="slider-btn slider-prev" aria-label="Önceki">‹</button>
+    <div class="slider-viewport">
+      <div class="slider-track">
+        <div class="slide">
+          <div class="slide-icon">🐘</div>
+          <div class="slide-name">PHP</div>
+          <div class="slide-desc">Sunucu taraflı web geliştirme için temel dilim. Form işleme ve veritabanı entegrasyonu için kullanıyorum.</div>
+        </div>
+        <div class="slide">
+          <div class="slide-icon">🗄️</div>
+          <div class="slide-name">MySQL</div>
+          <div class="slide-desc">İlişkisel veritabanı yönetimi. PHP uygulamalarımda veri depolama ve sorgulama için kullanıyorum.</div>
+        </div>
+        <div class="slide">
+          <div class="slide-icon">🌐</div>
+          <div class="slide-name">HTML & CSS</div>
+          <div class="slide-desc">Web sayfalarının yapısı ve görünümü. Responsive tasarımlar ve animasyonlar oluşturuyorum.</div>
+        </div>
+        <div class="slide">
+          <div class="slide-icon">⚡</div>
+          <div class="slide-name">JavaScript</div>
+          <div class="slide-desc">Sayfaları dinamik hale getirmek için kullanıyorum. DOM manipülasyonu, eventler ve animasyonlar.</div>
+        </div>
+        <div class="slide">
+          <div class="slide-icon">🐙</div>
+          <div class="slide-name">Git</div>
+          <div class="slide-desc">Versiyon kontrolü için kullanıyorum. Projelerimi GitHub üzerinde takip ediyorum.</div>
+        </div>
+      </div>
+    </div>
+    <button class="slider-btn slider-next" aria-label="Sonraki">›</button>
+    <div class="slider-dots"></div>
+  </div>
+</section>
+
+<!-- SEKMELİ İÇERİK -->
+<section class="section" style="background:var(--bg2);padding-top:80px;padding-bottom:80px;">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Öğrenme<br><em>Yolculuğum</em></h2>
+  </div>
+  <div class="tabs-wrapper reveal">
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-tab="frontend">Frontend</button>
+      <button class="tab-btn" data-tab="backend">Backend</button>
+      <button class="tab-btn" data-tab="tools">Araçlar</button>
+    </div>
+    <div class="tabs-content">
+      <div class="tab-panel active" id="tab-frontend">
+        <div class="tab-grid">
+          <div class="tab-item"><span class="tab-icon">🎨</span><strong>HTML5</strong><p>Semantik yapı, form elemanları, erişilebilirlik</p></div>
+          <div class="tab-item"><span class="tab-icon">✨</span><strong>CSS3</strong><p>Flexbox, Grid, animasyonlar, responsive tasarım</p></div>
+          <div class="tab-item"><span class="tab-icon">⚡</span><strong>JavaScript</strong><p>DOM manipülasyonu, event handling, fetch API</p></div>
+        </div>
+      </div>
+      <div class="tab-panel" id="tab-backend">
+        <div class="tab-grid">
+          <div class="tab-item"><span class="tab-icon">🐘</span><strong>PHP</strong><p>Form işleme, session yönetimi, dosya işlemleri</p></div>
+          <div class="tab-item"><span class="tab-icon">🗄️</span><strong>MySQL</strong><p>CRUD işlemleri, JOIN sorguları, veritabanı tasarımı</p></div>
+          <div class="tab-item"><span class="tab-icon">🔒</span><strong>Güvenlik</strong><p>SQL injection önleme, şifreleme temelleri</p></div>
+        </div>
+      </div>
+      <div class="tab-panel" id="tab-tools">
+        <div class="tab-grid">
+          <div class="tab-item"><span class="tab-icon">🐙</span><strong>Git & GitHub</strong><p>Versiyon kontrolü, branch yönetimi, pull request</p></div>
+          <div class="tab-item"><span class="tab-icon">🐧</span><strong>Linux</strong><p>Terminal komutları, dosya sistemi, temel bash</p></div>
+          <div class="tab-item"><span class="tab-icon">💻</span><strong>VS Code</strong><p>Geliştirme ortamım, eklentiler ve kısayollar</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- İSTATİSTİK SAYACI -->
+<section class="section stats-section">
+  <div class="stats-grid">
+    <div class="stat-counter reveal" data-target="1" data-suffix="+">
+      <div class="counter-num">0</div>
+      <div class="counter-label">Yıl Deneyim</div>
+    </div>
+    <div class="stat-counter reveal reveal-delay-1" data-target="1" data-suffix="">
+      <div class="counter-num">0</div>
+      <div class="counter-label">Tamamlanan Proje</div>
+    </div>
+    <div class="stat-counter reveal reveal-delay-2" data-target="4" data-suffix="+">
+      <div class="counter-num">0</div>
+      <div class="counter-label">Teknoloji</div>
+    </div>
+    <div class="stat-counter reveal reveal-delay-3" data-target="100" data-suffix="%">
+      <div class="counter-num">0</div>
+      <div class="counter-label">Öğrenme Azmi</div>
+    </div>
+  </div>
+</section>
+
 <!-- İLETİŞİM ÇAĞRI -->
 <section class="section" style="background:var(--bg2);padding-top:80px;padding-bottom:80px;">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
@@ -156,6 +274,25 @@
   <span class="footer-copy">© 2026 Tüm Hakları Saklıdır.</span>
   <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
 </footer>
+
+<!-- YUKARIYA ÇIK BUTONU -->
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukarıya çık" title="Yukarıya Çık">↑</button>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Kapat">✕</button>
+    <div class="modal-icon">🚀</div>
+    <h3 class="modal-title" id="modalTitle">Yeni Proje Geliyor!</h3>
+    <p class="modal-body">Şu anda yeni projeler üzerinde çalışıyorum. Yakında burada görebilirsiniz. Takipte kalın!</p>
+    <div class="modal-actions">
+      <a href="pages/projeler.html" class="hero-cta" style="display:inline-flex;">
+        <span>Projeleri Gör</span><span>→</span>
+      </a>
+      <button class="modal-dismiss" id="modalDismiss">Tamam, anladım</button>
+    </div>
+  </div>
+</div>
 
 <script src="assets/js/main.js"></script>
 </body>
