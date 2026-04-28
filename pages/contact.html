@@ -5,119 +5,230 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>İletişim — Salih Gönül</title>
   <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/contact.css">
 </head>
 <body>
 
-<div class="cursor"></div>
-<div class="cursor-ring"></div>
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
 
-<header>
-  <a href="../index.html" class="logo">Salih <span>G.</span></a>
-  <div class="header-right">
-    <nav>
-      <a href="../index.html" data-num="01">Ana Sayfa</a>
-      <a href="about.html" data-num="02">Hakkında</a>
-      <a href="projeler.html" data-num="03">Projeler</a>
-      <a href="contact.html" data-num="04">İletişim</a>
-    </nav>
-    <button class="theme-toggle" aria-label="Tema değiştir">
-      <span class="icon-moon">☽</span>
-      <span class="icon-sun">☀</span>
-    </button>
-    <button class="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+  <header>
+    <a href="../index.html" class="logo">Salih <span>G.</span></a>
+    <div class="header-right">
+      <nav>
+        <a href="../index.html"        data-num="01">Ana Sayfa</a>
+        <a href="about.html"           data-num="02">Hakkında</a>
+        <a href="projeler.html"        data-num="03">Projeler</a>
+        <a href="contact.html"         data-num="04" class="active">İletişim</a>
+      </nav>
+      <button class="theme-toggle" aria-label="Tema değiştir">
+        <span class="icon-moon">☽</span>
+        <span class="icon-sun">☀</span>
+      </button>
+      <button class="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBİL MENÜ -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <nav class="mobile-nav">
+        <a href="../index.html"  data-num="01">Ana Sayfa</a>
+        <a href="about.html"    data-num="02">Hakkında</a>
+        <a href="projeler.html" data-num="03">Projeler</a>
+        <a href="contact.html"  data-num="04">İletişim</a>
+      </nav>
+    </div>
   </div>
-</header>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
 
-<!-- MOBİL MENÜ -->
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <div class="mobile-menu-inner">
-    <nav class="mobile-nav">
-      <a href="../index.html" data-num="01">Ana Sayfa</a>
-      <a href="about.html" data-num="02">Hakkında</a>
-      <a href="projeler.html" data-num="03">Projeler</a>
-      <a href="contact.html" data-num="04">İletişim</a>
-    </nav>
-  </div>
-</div>
-<div class="mobile-overlay" id="mobileOverlay"></div>
+  <!-- HERO -->
+  <section class="contact-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-blob3"></div>
+    <div class="hero-tag">İletişim</div>
+    <h1 class="hero-title">
+      Benimle<br><em>İletişime</em><br>Geç.
+    </h1>
+    <p class="hero-sub">
+      Proje önerilerin, sorular veya sadece merhaba demek için formu doldurabilirsin.
+    </p>
+  </section>
 
-<div class="page-hero">
-  <div class="page-hero-tag">İletişim</div>
-  <h1>Benimle <em>İletişim</em></h1>
-</div>
+  <!-- FORM + BİLGİ -->
+  <section class="section contact-section">
+    <div class="contact-layout">
 
-<div class="contact-content">
-  <div class="contact-full-grid">
+      <!-- Sol: Bilgi Kartları -->
+      <div class="contact-info reveal">
+        <div class="info-heading">
+          <span class="section-num">04</span>
+          <h2 class="section-title" style="margin-top:8px;">Bana<br><em>Ulaş</em></h2>
+        </div>
 
-    <div class="reveal">
-      <h3 style="font-family:var(--font-display);font-size:1.6rem;letter-spacing:.04em;color:var(--text-muted);margin-bottom:16px;">Merhaba demek ister misin?</h3>
-      <a href="mailto:salihgnl06@gmail.com" class="contact-big-email">salihgnl06@gmail.com</a>
+        <div class="info-cards">
+          <a href="mailto:salihgnl06@gmail.com" class="info-card">
+            <span class="info-icon">📧</span>
+            <div>
+              <div class="info-label">E-posta</div>
+              <div class="info-value">salihgnl06@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/salihgonul" target="_blank" rel="noopener" class="info-card">
+            <span class="info-icon">💼</span>
+            <div>
+              <div class="info-label">LinkedIn</div>
+              <div class="info-value">linkedin.com/in/salihgonul</div>
+            </div>
+          </a>
+          <a href="https://github.com/salihgnl06" target="_blank" rel="noopener" class="info-card">
+            <span class="info-icon">🐙</span>
+            <div>
+              <div class="info-label">GitHub</div>
+              <div class="info-value">github.com/salihgnl06</div>
+            </div>
+          </a>
+          <div class="info-card no-link">
+            <span class="info-icon">📍</span>
+            <div>
+              <div class="info-label">Konum</div>
+              <div class="info-value">Türkiye</div>
+            </div>
+          </div>
+        </div>
 
-      <p style="color:var(--text-muted);font-size:.88rem;line-height:1.9;margin-bottom:40px;">
-        Bir proje fikrin, önerin veya sadece tanışmak istersen benimle iletişime geçebilirsin.
-      </p>
-
-      <div class="contact-links">
-        <a href="mailto:salihgnl06@gmail.com" class="contact-link">
-          <div class="contact-link-icon">✉</div>
-          <span>salihgnl06@gmail.com</span>
-        </a>
-        <a href="https://github.com/salihgnl06" target="_blank" class="contact-link">
-          <div class="contact-link-icon">⌥</div>
-          <span>github.com/salihgnl06</span>
-        </a>
-        <a href="https://www.linkedin.com/in/salihgonul/" target="_blank" class="contact-link">
-          <div class="contact-link-icon">in</div>
-          <span>linkedin.com/in/salihgonul/</span>
-        </a>
+        <div class="availability-badge">
+          <span class="pulse-dot"></span>
+          <span>Yeni fırsatlara açık</span>
+        </div>
       </div>
 
-      <div style="margin-top:48px;padding-top:48px;border-top:1px solid var(--border);">
-        <div style="font-family:var(--font-mono);font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;">Durum</div>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:9px;height:9px;border-radius:50%;background:var(--c4);box-shadow:0 0 10px var(--c4);animation:scrollPulse 2s ease-in-out infinite;"></div>
-          <span style="font-size:.88rem;color:var(--text-muted);">İş birliği ve projeler için müsaitim</span>
+      <!-- Sağ: Form -->
+      <div class="contact-form-wrapper reveal reveal-delay-2">
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3>Mesaj Gönder</h3>
+            <p>Tüm alanlar zorunludur.</p>
+          </div>
+
+          <form id="contactForm" novalidate>
+
+            <!-- Ad Soyad -->
+            <div class="form-group" id="group-name">
+              <label for="name">Ad Soyad</label>
+              <div class="input-wrapper">
+                <span class="input-icon">👤</span>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Adın ve soyadın"
+                  required
+                  minlength="2"
+                  autocomplete="name"
+                />
+              </div>
+              <span class="field-error" id="error-name" aria-live="polite"></span>
+            </div>
+
+            <!-- E-posta -->
+            <div class="form-group" id="group-email">
+              <label for="email">E-posta Adresi</label>
+              <div class="input-wrapper">
+                <span class="input-icon">✉️</span>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="ornek@email.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+              <span class="field-error" id="error-email" aria-live="polite"></span>
+            </div>
+
+            <!-- Konu -->
+            <div class="form-group" id="group-subject">
+              <label for="subject">Konu</label>
+              <div class="input-wrapper">
+                <span class="input-icon">📌</span>
+                <select id="subject" name="subject" required>
+                  <option value="">— Konu seçin —</option>
+                  <option value="iş-birliği">İş Birliği Teklifi</option>
+                  <option value="proje">Proje Hakkında</option>
+                  <option value="freelance">Freelance İş</option>
+                  <option value="soru">Genel Soru</option>
+                  <option value="diğer">Diğer</option>
+                </select>
+              </div>
+              <span class="field-error" id="error-subject" aria-live="polite"></span>
+            </div>
+
+            <!-- Mesaj -->
+            <div class="form-group" id="group-message">
+              <label for="message">Mesajın</label>
+              <div class="input-wrapper textarea-wrapper">
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Ne hakkında konuşmak istiyorsun?"
+                  required
+                  minlength="10"
+                  maxlength="1000"
+                  rows="5"
+                ></textarea>
+              </div>
+              <div class="char-count-row">
+                <span class="field-error" id="error-message" aria-live="polite"></span>
+                <span class="char-count"><span id="charCount">0</span>/1000</span>
+              </div>
+            </div>
+
+            <!-- KVKK -->
+            <div class="form-group checkbox-group" id="group-kvkk">
+              <label class="checkbox-label">
+                <input type="checkbox" id="kvkk" name="kvkk" required />
+                <span class="checkbox-custom"></span>
+                <span>Kişisel verilerimin iletişim amacıyla işlenmesine onay veriyorum.</span>
+              </label>
+              <span class="field-error" id="error-kvkk" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span class="btn-text">Mesajı Gönder</span>
+              <span class="btn-icon">→</span>
+              <span class="btn-spinner" aria-hidden="true"></span>
+            </button>
+
+          </form>
+
+          <!-- Başarı Mesajı -->
+          <div class="success-message" id="successMessage" aria-live="assertive" hidden>
+            <div class="success-icon">✅</div>
+            <h4>Mesajın Alındı!</h4>
+            <p>Teşekkürler! En kısa sürede sana dönüş yapacağım.</p>
+            <button class="hero-cta" id="resetFormBtn" style="margin-top:16px;display:inline-flex;">
+              <span>Yeni Mesaj Gönder</span><span>→</span>
+            </button>
+          </div>
+
         </div>
       </div>
+
     </div>
+  </section>
 
-    <div class="reveal reveal-delay-2">
-      <form class="contact-form">
-        <div class="form-group">
-          <label class="form-label">Adınız</label>
-          <input type="text" class="form-input" placeholder="Adınız Soyadınız" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">E-posta</label>
-          <input type="email" class="form-input" placeholder="ornek@email.com" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Konu</label>
-          <input type="text" class="form-input" placeholder="Proje, öneri, soru...">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Mesajınız</label>
-          <textarea class="form-textarea" placeholder="Merhaba..." required></textarea>
-        </div>
-        <button type="submit" class="form-submit">
-          <span>Mesaj Gönder</span>
-        </button>
-      </form>
-    </div>
+  <footer>
+    <span class="footer-copy">© 2026 Tüm Hakları Saklıdır.</span>
+    <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
+  </footer>
 
-  </div>
-</div>
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukarıya çık" title="Yukarıya Çık">↑</button>
 
-<footer>
-  <span class="footer-copy">© Tüm Hakları Saklıdır.</span>
-  <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
-</footer>
-
-<!-- YUKARIYA ÇIK BUTONU -->
-<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukarıya çık" title="Yukarıya Çık">↑</button>
-
-<script src="../assets/js/main.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/contact.js"></script>
 </body>
 </html>
