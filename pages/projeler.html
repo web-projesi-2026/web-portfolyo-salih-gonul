@@ -12,6 +12,89 @@
     [data-theme="light"] .project-card[data-bg="web"] .project-card-header {
       background: linear-gradient(135deg, #f0d8f8 0%, #c8d8f4 100%);
     }
+
+    /* ── FAVORİ BUTONU ── */
+    .project-card-header { position: relative; }
+    .fav-btn {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%; width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; padding: 0; z-index: 2;
+      transition: transform .2s var(--ease), background .2s, border-color .2s, box-shadow .2s;
+    }
+    [data-theme="light"] .fav-btn { background: rgba(255,255,255,.6); border-color: rgba(0,0,0,.1); }
+    .fav-btn:hover { transform: scale(1.15); background: rgba(255,60,172,.15); border-color: rgba(255,60,172,.4); box-shadow: 0 0 14px rgba(255,60,172,.3); }
+    .fav-btn.active { background: rgba(255,60,172,.2); border-color: rgba(255,60,172,.5); box-shadow: 0 0 18px rgba(255,60,172,.35); }
+    .fav-btn.fav-pop { animation: favPop .35s var(--ease) forwards; }
+    @keyframes favPop { 0%{transform:scale(1)} 40%{transform:scale(1.4)} 70%{transform:scale(.9)} 100%{transform:scale(1)} }
+
+    /* ── KART LİNKLER ── */
+    .card-links { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+    .card-link-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em;
+      color: var(--text-muted); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 6px; padding: 5px 10px; text-decoration: none;
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    [data-theme="light"] .card-link-btn { border-color: rgba(0,0,0,.12); }
+    .card-link-btn:hover { color: var(--c1); border-color: rgba(255,60,172,.4); background: rgba(255,60,172,.06); }
+
+    /* ── FAVORİ BADGE ── */
+    .fav-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--grad-hero); color: #fff;
+      font-size: .6rem; font-family: var(--font-mono);
+      width: 18px; height: 18px; border-radius: 50%;
+      margin-left: 5px; vertical-align: middle;
+    }
+
+    /* ── TOAST ── */
+    .sg-toast {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--bg2); border: 1px solid rgba(255,60,172,.3);
+      color: var(--text); padding: 12px 24px; border-radius: 50px;
+      font-size: .82rem; font-family: var(--font-mono); letter-spacing: .04em;
+      box-shadow: 0 8px 32px rgba(0,0,0,.35); z-index: 9999;
+      opacity: 0; transition: transform .35s var(--ease), opacity .35s;
+      white-space: nowrap; pointer-events: none;
+    }
+    .sg-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── LOADER ── */
+    .projects-loader {
+      grid-column: 1 / -1; display: flex; flex-direction: column;
+      align-items: center; gap: 16px; padding: 80px 0;
+      color: var(--text-muted); font-family: var(--font-mono); font-size: .82rem;
+    }
+    .loader-spinner {
+      width: 36px; height: 36px;
+      border: 2px solid rgba(255,60,172,.15); border-top-color: var(--c1);
+      border-radius: 50%; animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── BOŞ DURUM ── */
+    .no-projects-msg {
+      grid-column: 1 / -1; display: flex; flex-direction: column;
+      align-items: center; gap: 14px; padding: 80px 0;
+      color: var(--text-muted); font-family: var(--font-mono); font-size: .85rem; text-align: center;
+    }
+    .no-icon { font-size: 2.5rem; }
+
+    /* ── VERİ NOTU ── */
+    .data-source-note {
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .08em;
+      color: var(--text-dim); margin-bottom: 28px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .data-source-note::before {
+      content: ''; display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--c1); opacity: .7;
+    }
   </style>
 </head>
 <body>
@@ -38,7 +121,6 @@
   </div>
 </header>
 
-<!-- MOBİL MENÜ -->
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <div class="mobile-menu-inner">
     <nav class="mobile-nav">
@@ -58,32 +140,20 @@
 
 <div class="projects-content">
 
+  <p class="data-source-note reveal">
+    Veriler <code>data/projects.json</code> dosyasından dinamik olarak yükleniyor
+  </p>
+
   <div class="projects-filter reveal">
     <button class="filter-btn active" data-filter="all">Tümü</button>
     <button class="filter-btn" data-filter="web">Web</button>
+    <button class="filter-btn" data-filter="tool">Araçlar</button>
+    <button class="filter-btn" data-filter="fav">❤️ Favoriler</button>
   </div>
 
-  <div class="projects-grid">
+  <!-- Kartlar projects.js tarafından JSON'dan okunarak buraya render edilir -->
+  <div class="projects-grid" id="projects-grid-dynamic"></div>
 
-    <div class="project-card reveal" data-category="web" data-bg="web">
-      <div class="project-card-header">
-        <div class="project-card-icon">🌐</div>
-      </div>
-      <div class="project-card-body">
-        <div class="project-card-num">Proje — 001 · 2026</div>
-        <div class="project-card-name">Portfolyo Sitesi</div>
-        <div class="project-card-desc">
-          Saf HTML, CSS ve JavaScript ile geliştirdiğim kişisel portfolyo sitesi. Özel cursor efekti, açık/koyu tema geçişi, scroll reveal animasyonları ve mobil uyumlu tasarım içeriyor.
-        </div>
-        <div class="project-card-tech">
-          <span class="tech-tag">HTML</span>
-          <span class="tech-tag">CSS</span>
-          <span class="tech-tag">JavaScript</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>
 
 <footer>
@@ -91,9 +161,10 @@
   <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
 </footer>
 
-<!-- YUKARIYA ÇIK BUTONU -->
 <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Yukarıya çık" title="Yukarıya Çık">↑</button>
 
 <script src="../assets/js/main.js"></script>
+<script src="../assets/js/projects.js"></script>
+
 </body>
 </html>
