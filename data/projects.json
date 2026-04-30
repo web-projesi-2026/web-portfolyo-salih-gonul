@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "num": "001",
+    "year": "2026",
+    "name": "Portfolyo Sitesi",
+    "desc": "Saf HTML, CSS ve JavaScript ile geliştirdiğim kişisel portfolyo sitesi. Özel cursor efekti, açık/koyu tema geçişi, scroll reveal animasyonları ve mobil uyumlu tasarım içeriyor.",
+    "icon": "🌐",
+    "category": "web",
+    "bg": "web",
+    "techs": ["HTML", "CSS", "JavaScript"],
+    "link": null,
+    "github": "https://github.com"
+  },
+  {
+    "id": 2,
+    "num": "002",
+    "year": "2026",
+    "name": "Öğrenci Not Takip Sistemi",
+    "desc": "PHP ve MySQL ile geliştirdiğim, öğrencilerin ders notlarını ve sınav sonuçlarını takip edebildiği veritabanı destekli web uygulaması.",
+    "icon": "📊",
+    "category": "web",
+    "bg": "web",
+    "techs": ["PHP", "MySQL", "HTML", "CSS"],
+    "link": null,
+    "github": null
+  },
+  {
+    "id": 3,
+    "num": "003",
+    "year": "2025",
+    "name": "Terminal Görev Yöneticisi",
+    "desc": "Bash scripting ile yazdığım komut satırı tabanlı yapılacaklar listesi uygulaması. Görev ekleme, tamamlama ve silme özelliklerine sahip.",
+    "icon": "🐧",
+    "category": "tool",
+    "bg": "web",
+    "techs": ["Bash", "Linux"],
+    "link": null,
+    "github": null
+  },
+  {
+    "id": 4,
+    "num": "004",
+    "year": "2025",
+    "name": "Hava Durumu Uygulaması",
+    "desc": "JavaScript Fetch API kullanarak OpenWeatherMap servisinden anlık hava durumu verisi çeken, şehir bazlı arama yapılabilen responsive bir web uygulaması.",
+    "icon": "⛅",
+    "category": "web",
+    "bg": "web",
+    "techs": ["HTML", "CSS", "JavaScript", "API"],
+    "link": null,
+    "github": null
+  },
+  {
+    "id": 5,
+    "num": "005",
+    "year": "2025",
+    "name": "SQL Sorgulama Aracı",
+    "desc": "PHP ile geliştirilmiş, MySQL veritabanına bağlanarak tablo listeleme ve basit sorgu çalıştırma imkânı sunan mini bir yönetim paneli.",
+    "icon": "🗄️",
+    "category": "tool",
+    "bg": "web",
+    "techs": ["PHP", "MySQL"],
+    "link": null,
+    "github": null
+  }
+]
