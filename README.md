@@ -1,139 +1,106 @@
-# 🚀 Kişisel Portfolyo Web Sitesi
+# 🌐 Salih Gönül — Kişisel Portfolyo Sitesi
 
-Modern, şık ve tamamen responsive bir kişisel portfolyo web sitesi.
-Bu proje, geliştirici olarak kendini tanıtmak, projelerini sergilemek ve iletişim kurmak için tasarlanmıştır.
+> Bilgisayar Programcılığı öğrencisi Salih Gönül'ün kişisel portfolyo sitesi.
+> HTML, CSS, JavaScript ve PHP + MySQL ile geliştirilmiştir.
 
----
-
-## 🖼️ Proje Hakkında
-
-Bu portfolyo sitesi aşağıdaki amaçlarla geliştirilmiştir:
-
-* 👨‍💻 Kişisel bilgileri sunmak
-* 💼 Projeleri sergilemek
-* 📬 Ziyaretçilerle iletişim kurmak
-* 🌐 Profesyonel bir dijital kimlik oluşturmak
+**GitHub:** [github.com/salihgnl06](https://github.com/salihgnl06)
 
 ---
 
 ## ✨ Özellikler
 
-* 🖤 Modern **Dark Mode** tasarım (Light Mode desteği ile)
-* 📱 Tam uyumlu **Responsive Design**
-* 🎬 Akıcı animasyonlar (hover & scroll)
-* 📌 Sticky (sabit) navbar
-* 🔍 Aktif menü vurgulama
-* 📊 Yetenek gösterimi (skill bars / ikonlar)
-* 💼 Proje kartları
-* 📄 Çok sayfalı yapı (About, Projects, Contact)
-* 📬 **Tam çalışan iletişim formu** (form doğrulama dahil)
+### 1. Kullanıcı Deneyimi
+- 🔍 **Proje Arama Kutusu** — İsim, açıklama veya teknoloji bazlı gerçek zamanlı arama
+- 🔃 **Proje Sıralama** — A→Z, Z→A, En Yeni, En Eski
+- 🏷️ **Kategori Filtreleme** — Web, Araçlar, Favoriler
+- ❤️ **Favori Sistemi** — LocalStorage ile favori kaydetme
+- 🌗 **Açık/Koyu Tema** — Kullanıcı tercihi kaydedilir
+- 📱 **Responsive Tasarım** — Mobil, tablet, masaüstü uyumlu
+
+### 2. API & Dinamik Veri
+- ⛅ **Hava Durumu Widgeti** — Open-Meteo API (ücretsiz, API key gerekmez)
+  - Şehir bazlı sorgulama, sıcaklık/nem/rüzgar bilgisi
+- 📦 **JSON Veri Kaynağı** — Projeler `data/projects.json` dosyasından yüklenir
+
+### 3. Veritabanı İşlemleri (PHP + MySQL)
+- 👤 **Kullanıcı Kayıt** — bcrypt ile güvenli şifreleme
+- 🔑 **Kullanıcı Giriş** — Session tabanlı kimlik doğrulama
+- 📩 **Mesaj Kaydetme** — İletişim formu veritabanına yazar
+- 📋 **Mesaj Listeleme** — Admin panelinde görüntüleme
+- 🗑️ **Silme / Güncelleme** — CRUD işlemleri
 
 ---
 
-## 📋 İletişim Formu — Özellikler
+## 🛠️ Teknolojiler
 
-`pages/contact.html` sayfasında yer alan iletişim formu aşağıdaki teknik gereksinimleri karşılar:
-
-| Özellik | Açıklama |
-|---|---|
-| `required` alanlar | Tüm form alanları zorunludur; boş gönderilemez |
-| E-posta formatı | `type="email"` + regex ile format doğrulaması |
-| Boş alan denetimi | Her alan gönderimde ve `blur` sonrası kontrol edilir |
-| Hata mesajları | Alan başına özel, anlık hata mesajları gösterilir |
-| Başarı mesajı | Form doğru doldurulduğunda yeşil başarı bildirimi görünür |
-| Canlı doğrulama | Kullanıcı alandan çıktıktan sonra anlık geri bildirim |
-| Karakter sayacı | Mesaj alanı için 0/1000 sayacı |
-| KVKK onayı | Checkbox ile KVKK onayı zorunluluğu |
-| Yükleme durumu | Gönderim sırasında spinner animasyonu |
-| Sıfırlama | Başarı sonrası "Yeni Mesaj Gönder" ile form sıfırlanır |
-
-### Form Alanları
-
-1. **Ad Soyad** — Minimum 2 karakter, boş bırakılamaz
-2. **E-posta Adresi** — `ornek@domain.com` formatında, boş bırakılamaz
-3. **Konu** — Açılır menüden seçim zorunlu (5 seçenek)
-4. **Mesaj** — Minimum 10, maximum 1000 karakter
-5. **KVKK Onayı** — Checkbox, işaretlenmeden gönderilemez
-
-### İlgili Dosyalar
-
-```
-pages/contact.html       → Form HTML yapısı
-assets/css/contact.css   → Form özel stilleri
-assets/js/contact.js     → Doğrulama (validation) mantığı
-```
+| Katman | Teknoloji |
+|--------|-----------|
+| Frontend | HTML5, CSS3, JavaScript ES6+ |
+| Backend | PHP 8+ (PDO) |
+| Veritabanı | MySQL 8 / MariaDB |
+| API | Open-Meteo (Hava Durumu) |
+| Araçlar | Git, GitHub, VS Code |
 
 ---
 
-## 🛠️ Kullanılan Teknolojiler
+## ⚙️ Kurulum
 
-* 🌐 HTML5 (`required`, `type="email"`, `minlength`, `maxlength`, `novalidate`)
-* 🎨 CSS3 (Flexbox & Grid, CSS Variables, Animasyonlar)
-* ⚡ JavaScript (Vanilla JS, DOM API, Form Validation)
+### Statik Mod (PHP olmadan)
+```bash
+git clone https://github.com/salihgnl06/web-portfolyo.git
+# index.html dosyasını tarayıcıda açın
+```
+
+### PHP + MySQL ile Tam Kurulum
+```bash
+# 1. Repoyu klonlayın ve htdocs/www klasörüne kopyalayın
+# 2. api/db.php içindeki DB_USER ve DB_PASS değerlerini düzenleyin
+# 3. Veritabanını oluşturun:
+mysql -u root -p < db/schema.sql
+# 4. http://localhost/portfolyo/ adresinden açın
+```
+
+**Test Admin:** `admin@example.com` / `admin123`
 
 ---
 
 ## 📁 Proje Yapısı
 
 ```
-portfolio-site/
-│
-├── index.html
-├── assets/
-│   ├── css/
-│   │   ├── style.css         ← Ana stil dosyası
-│   │   └── contact.css       ← İletişim formu stilleri (YENİ)
-│   └── js/
-│       ├── main.js           ← Genel JS (slider, navbar, vb.)
-│       └── contact.js        ← Form doğrulama mantığı (YENİ)
-│
+web-portfolyo/
+├── index.html              # Ana sayfa (hava durumu widgeti dahil)
 ├── pages/
-│   ├── about.html
-│   ├── projeler.html
-│   └── contact.html          ← İletişim formu (GÜNCELLENDİ)
-│
+│   ├── about.html          # Hakkında
+│   ├── projeler.html       # Projeler (arama + sıralama + filtre)
+│   ├── contact.html        # İletişim formu
+│   ├── auth.html           # Giriş / Kayıt
+│   └── admin.html          # Admin paneli
+├── assets/
+│   ├── css/style.css       # Ana stil
+│   ├── css/contact.css     # Form stilleri
+│   ├── js/main.js          # Genel fonksiyonlar
+│   ├── js/projects.js      # Proje kartları + arama + sıralama
+│   ├── js/contact.js       # Form doğrulama + PHP entegrasyonu
+│   └── img/favicon.svg     # Favicon
+├── data/projects.json      # Proje verileri
+├── api/
+│   ├── db.php              # PDO bağlantısı
+│   ├── register.php        # Kayıt API
+│   ├── login.php           # Giriş API
+│   ├── logout.php          # Çıkış
+│   ├── contact.php         # Mesaj kaydetme API
+│   └── messages.php        # Mesaj yönetimi API
+├── db/schema.sql           # Veritabanı şeması
 └── README.md
 ```
 
 ---
 
-## 🚀 Kurulum ve Kullanım
+## 👤 Geliştirici
 
-1. Bu repoyu klonla:
+**Salih Gönül**
+- GitHub: [@salihgnl06](https://github.com/salihgnl06)
+- LinkedIn: [linkedin.com/in/salihgonul](https://linkedin.com/in/salihgonul)
+- E-posta: salihgnl06@gmail.com
 
-```bash
-git clone https://github.com/web-projesi-2026/web-portfolyo-salih-gonul.git
-```
-
-2. Klasöre gir:
-
-```bash
-cd web-portfolyo-salih-gonul
-```
-
-3. `index.html` dosyasını tarayıcıda aç 🎉
-
-> **Not:** Proje saf HTML/CSS/JS ile geliştirildiğinden herhangi bir kurulum, derleme veya sunucu gerektirmez. Doğrudan tarayıcıda açılabilir.
-
----
-
-## 🎯 Özelleştirme
-
-Aşağıdaki alanları kendine göre düzenleyebilirsin:
-
-* 👤 İsim ve başlık — `index.html`
-* 📝 Hakkımda sayfası — `pages/about.html`
-* 💼 Projeler — `pages/projeler.html`
-* 📬 İletişim formu — `pages/contact.html` + `assets/js/contact.js`
-* 🎨 Stil ayarları — `assets/css/style.css` + `assets/css/contact.css`
-* ⚡ Script işlemleri — `assets/js/main.js` + `assets/js/contact.js`
-
----
-
-## 📬 İletişim
-
-Benimle iletişime geçmek için:
-
-* 📧 Email: [salihgnl06@gmail.com](mailto:salihgnl06@gmail.com)
-* 💼 LinkedIn: <https://linkedin.com/in/salihgonul>
-* 🐙 GitHub: <https://github.com/salihgnl06>
+*Son güncelleme: 2026*

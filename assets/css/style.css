@@ -125,6 +125,29 @@ nav a::before { content: attr(data-num); font-size: .55rem; color: var(--c1); ma
 nav a:hover, nav a.active { color: var(--text); border-color: var(--border); background: rgba(255,255,255,.05); }
 nav a.active { color: var(--c4); border-color: rgba(0,245,160,.25); }
 
+/* ── GİRİŞ YAP / KULLANICI BUTONU ── */
+.nav-auth-btn {
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 7px 16px; border-radius: 40px;
+  background: var(--grad-hero); color: #fff !important;
+  border: none !important; flex-shrink: 0;
+  transition: opacity .2s, transform .2s;
+  white-space: nowrap;
+}
+.nav-auth-btn::before { display: none !important; }
+.nav-auth-btn:hover { opacity: .85; transform: scale(1.04); background: var(--grad-hero) !important; border: none !important; }
+.nav-auth-btn.logged-in {
+  background: rgba(255,255,255,.08) !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
+  color: var(--text) !important;
+}
+[data-theme="light"] .nav-auth-btn.logged-in {
+  background: rgba(0,0,0,.05) !important;
+  border: 1px solid rgba(0,0,0,.12) !important;
+  color: var(--text) !important;
+}
+
 .theme-toggle {
   display: flex; align-items: center; justify-content: center;
   width: 38px; height: 38px; border-radius: 50%;

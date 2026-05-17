@@ -259,3 +259,35 @@ document.querySelector('.contact-form')?.addEventListener('submit', e => {
     el?.addEventListener('mouseleave', () => { document.querySelector('.cursor')?.classList.remove('hover'); document.querySelector('.cursor-ring')?.classList.remove('hover'); });
   });
 })();
+
+// ── Navigasyon: Giriş Butonu Dinamik Güncelleme ──────────────
+(function () {
+  function updateAuthNav() {
+    const btn = document.getElementById('navAuthBtn');
+    if (!btn) return;
+
+    const session = JSON.parse(localStorage.getItem('sg_session') || 'null');
+
+    if (session && session.name) {
+      const initials = session.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      btn.textContent = '👤 ' + session.name.split(' ')[0];
+      btn.classList.add('logged-in');
+      btn.title = 'Hesabım (' + session.name + ')';
+    } else {
+      btn.textContent = 'Giriş Yap';
+      btn.classList.remove('logged-in');
+      btn.title = '';
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateAuthNav);
+  } else {
+    updateAuthNav();
+  }
+
+  // Başka sekmedeki giriş/çıkışı da yakala
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'sg_session') updateAuthNav();
+  });
+})();

@@ -188,30 +188,47 @@
         return;
       }
 
-      // Gönderme simülasyonu (loading state)
+      // PHP backend'e gönder
       submitBtn.classList.add('loading');
       submitBtn.disabled = true;
 
-      // Backend entegrasyonu olmadığından 1.5 sn gecikme ile başarı göster
-      setTimeout(function () {
-        submitBtn.classList.remove('loading');
+      var formData = {
+        name   : document.getElementById('name').value.trim(),
+        email  : document.getElementById('email').value.trim(),
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value.trim()
+      };
 
-        // Formu gizle, başarı mesajını göster
+      fetch('../api/contact.php', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify(formData)
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        submitBtn.classList.remove('loading');
+        if (data.success) {
+          form.style.display = 'none';
+          if (successMsg) {
+            successMsg.hidden = false;
+            successMsg.setAttribute('tabindex', '-1');
+          }
+        } else {
+          var errMsg = data.error || (data.errors && data.errors.join(' ')) || 'Bir hata oluştu.';
+          alert('Hata: ' + errMsg);
+          submitBtn.disabled = false;
+        }
+      })
+      .catch(function() {
+        // Sunucu yoksa simülasyon moduna düş
+        submitBtn.classList.remove('loading');
         form.style.display = 'none';
         if (successMsg) {
-          successMsg.hidden  = false;
-          successMsg.focus && successMsg.setAttribute('tabindex', '-1');
+          successMsg.hidden = false;
+          successMsg.setAttribute('tabindex', '-1');
         }
-
-        // Console'a form verilerini yaz (geliştirici notu)
-        var formData = {
-          name   : document.getElementById('name').value.trim(),
-          email  : document.getElementById('email').value.trim(),
-          subject: document.getElementById('subject').value,
-          message: document.getElementById('message').value.trim(),
-        };
-        console.log('[ContactForm] Gönderilen veriler:', formData);
-      }, 1500);
+        console.warn('[ContactForm] PHP sunucusu bulunamadı, simülasyon modu aktif.');
+      });
     });
 
     // Formu sıfırla butonu

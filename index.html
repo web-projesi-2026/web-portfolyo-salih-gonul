@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Salih Gönül — Bilgisayar Programcılığı Öğrencisi</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -20,6 +21,7 @@
       <a href="pages/projeler.html" data-num="03">Projeler</a>
       <a href="pages/contact.html" data-num="04">İletişim</a>
     </nav>
+    <a href="pages/auth.html" class="nav-auth-btn" id="navAuthBtn">Giriş Yap</a>
     <button class="theme-toggle" aria-label="Tema değiştir">
       <span class="icon-moon">☽</span>
       <span class="icon-sun">☀</span>
@@ -39,6 +41,7 @@
       <a href="pages/projeler.html" data-num="03">Projeler</a>
       <a href="pages/contact.html" data-num="04">İletişim</a>
     </nav>
+    <a href="pages/auth.html" class="nav-auth-btn" id="navAuthBtn">Giriş Yap</a>
   </div>
 </div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
@@ -252,6 +255,45 @@
   </div>
 </section>
 
+<!-- HAVA DURUMU API WİDGET -->
+<section class="section" id="weatherSection" style="padding-top:0;">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Anlık<br><em>Hava Durumu</em></h2>
+  </div>
+  <p class="reveal" style="font-family:var(--font-mono);font-size:.78rem;color:var(--text-dim);margin-bottom:24px;">
+    Open-Meteo API · Harici veri entegrasyonu
+  </p>
+
+  <!-- Arama formu -->
+  <div class="reveal" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;max-width:480px;">
+    <input id="weather-city-input" type="text" placeholder="Şehir adı girin (örn: Ankara)"
+      style="flex:1;padding:10px 16px;background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:var(--text);font-family:var(--font-mono);font-size:.82rem;outline:none;"
+      value="Ankara">
+    <button id="weather-search-btn" class="hero-cta" style="display:inline-flex;padding:10px 20px;">
+      <span>Ara</span><span>→</span>
+    </button>
+  </div>
+
+  <!-- Widget kutusu -->
+  <div class="reveal" id="weather-widget"
+    style="max-width:560px;background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:28px 32px;min-height:140px;display:flex;align-items:center;justify-content:center;">
+    <span style="font-family:var(--font-mono);font-size:.8rem;color:var(--text-dim);">Yükleniyor...</span>
+  </div>
+</section>
+
+<style>
+.weather-main    { display:flex; align-items:center; gap:20px; width:100%; flex-wrap:wrap; }
+.weather-icon-lg { font-size:3.5rem; line-height:1; }
+.weather-temp    { font-family:var(--font-display); font-size:3rem; line-height:1; margin-bottom:4px; background:var(--grad-hero); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.weather-desc    { font-size:.9rem; color:var(--text-muted); text-transform:capitalize; margin-bottom:16px; }
+.weather-city    { font-family:var(--font-mono); font-size:.72rem; letter-spacing:.08em; color:var(--text-dim); margin-bottom:20px; }
+.weather-details { display:flex; gap:20px; flex-wrap:wrap; }
+.weather-detail  { font-family:var(--font-mono); font-size:.75rem; color:var(--text-muted); display:flex; flex-direction:column; gap:2px; }
+.weather-detail strong { color:var(--text); font-size:.9rem; }
+.weather-error   { color:#ff6b6b; font-family:var(--font-mono); font-size:.82rem; }
+</style>
+
 <!-- İLETİŞİM ÇAĞRI -->
 <section class="section" style="background:var(--bg2);padding-top:80px;padding-bottom:80px;">
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
@@ -295,5 +337,81 @@
 </div>
 
 <script src="assets/js/main.js"></script>
+<script>
+// ── Hava Durumu Widgeti (Open-Meteo API — API key gerekmez) ──
+(function () {
+  const widget  = document.getElementById('weather-widget');
+  const input   = document.getElementById('weather-city-input');
+  const btn     = document.getElementById('weather-search-btn');
+  if (!widget) return;
+
+  const WMO_CODES = {
+    0:'Açık',1:'Az bulutlu',2:'Parçalı bulutlu',3:'Kapalı',
+    45:'Sisli',48:'Dondurucu sis',51:'Hafif çisenti',53:'Orta çisenti',55:'Yoğun çisenti',
+    61:'Hafif yağmur',63:'Orta yağmur',65:'Yoğun yağmur',
+    71:'Hafif kar',73:'Orta kar',75:'Yoğun kar',80:'Sağanak',81:'Kuvvetli sağanak',
+    95:'Fırtına',96:'Dolu ile fırtına',99:'Yoğun dolu ile fırtına'
+  };
+  const WMO_ICONS = {
+    0:'☀️',1:'🌤️',2:'⛅',3:'☁️',
+    45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',
+    61:'🌦️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'❄️',
+    80:'🌧️',81:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'
+  };
+
+  async function fetchWeather(city) {
+    setLoading();
+    try {
+      const geoRes  = await fetch(
+        "https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(city) + "&count=1&language=tr"
+      );
+      const geoData = await geoRes.json();
+      if (!geoData.results || !geoData.results.length) { setError('Şehir bulunamadı. Farklı bir isim deneyin.'); return; }
+      const loc = geoData.results[0];
+      const lat = loc.latitude, lon = loc.longitude, name = loc.name, country = loc.country;
+
+      const wRes  = await fetch(
+        "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon +
+        "&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weathercode" +
+        "&wind_speed_unit=kmh&timezone=auto"
+      );
+      const wData = await wRes.json();
+      const c     = wData.current;
+      const code  = c.weathercode;
+      const icon  = WMO_ICONS[code]  || "🌡️";
+      const desc  = WMO_CODES[code]  || "Bilinmiyor";
+
+      widget.innerHTML =
+        "<div class=\"weather-main\">" +
+          "<div class=\"weather-icon-lg\">" + icon + "</div>" +
+          "<div>" +
+            "<div class=\"weather-temp\">" + Math.round(c.temperature_2m) + "°C</div>" +
+            "<div class=\"weather-desc\">" + desc + "</div>" +
+            "<div class=\"weather-city\">📍 " + name + ", " + country + "</div>" +
+            "<div class=\"weather-details\">" +
+              "<div class=\"weather-detail\"><span>Hissedilen</span><strong>" + Math.round(c.apparent_temperature) + "°C</strong></div>" +
+              "<div class=\"weather-detail\"><span>Nem</span><strong>%" + c.relative_humidity_2m + "</strong></div>" +
+              "<div class=\"weather-detail\"><span>Rüzgar</span><strong>" + Math.round(c.wind_speed_10m) + " km/s</strong></div>" +
+            "</div>" +
+          "</div>" +
+        "</div>";
+    } catch (err) {
+      setError("API bağlantı hatası. Lütfen tekrar deneyin.");
+    }
+  }
+
+  function setLoading() {
+    widget.innerHTML = "<span style=\"font-family:var(--font-mono);font-size:.8rem;color:var(--text-dim);\">Yükleniyor... ⏳</span>";
+  }
+  function setError(msg) {
+    widget.innerHTML = "<span class=\"weather-error\">⚠️ " + msg + "</span>";
+  }
+
+  btn && btn.addEventListener("click", function() { var v = input && input.value.trim(); if (v) fetchWeather(v); });
+  input && input.addEventListener("keydown", function(e) { if (e.key === "Enter") { var v = input.value.trim(); if (v) fetchWeather(v); } });
+  fetchWeather("Ankara");
+})();
+</script>
+
 </body>
 </html>
