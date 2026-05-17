@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giriş / Kayıt — Salih Gönül</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/contact.css">
+  <style>
+    .auth-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 24px 60px;
+    }
+    .auth-box {
+      width: 100%;
+      max-width: 460px;
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    [data-theme="light"] .auth-box { border-color: rgba(0,0,0,.08); }
+
+    /* Sekmeler */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    [data-theme="light"] .auth-tabs { border-color: rgba(0,0,0,.08); }
+    .auth-tab {
+      flex: 1; padding: 18px;
+      background: transparent; border: none;
+      font-family: var(--font-mono); font-size: .82rem; letter-spacing: .06em;
+      color: var(--text-muted); cursor: pointer;
+      transition: color .2s, background .2s;
+      text-transform: uppercase;
+    }
+    .auth-tab.active {
+      color: var(--c1);
+      background: rgba(255,60,172,.06);
+      border-bottom: 2px solid var(--c1);
+    }
+    .auth-tab:hover:not(.active) { color: var(--text); }
+
+    .auth-panel { padding: 32px; display: none; }
+    .auth-panel.active { display: block; }
+
+    .auth-title { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 8px; }
+    .auth-sub   { color: var(--text-muted); font-size: .85rem; margin-bottom: 28px; }
+
+    /* Admin ipucu kutusu */
+    .admin-hint {
+      background: rgba(255,60,172,.07);
+      border: 1px solid rgba(255,60,172,.25);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .admin-hint strong { color: var(--c1); }
+    .admin-hint-title {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--c1); margin-bottom: 8px; font-weight: 700;
+    }
+    .autofill-btn {
+      display: inline-block; margin-top: 8px;
+      padding: 4px 12px; border-radius: 6px;
+      border: 1px solid rgba(255,60,172,.3);
+      background: transparent; color: var(--c1);
+      font-family: var(--font-mono); font-size: .7rem;
+      cursor: pointer; transition: background .2s;
+    }
+    .autofill-btn:hover { background: rgba(255,60,172,.1); }
+
+    /* Mesaj kutuları */
+    .auth-msg {
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: .82rem;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .auth-msg.error   { background: rgba(255,60,60,.1);  border: 1px solid rgba(255,60,60,.3);  color: #ff6b6b; }
+    .auth-msg.success { background: rgba(60,255,120,.1); border: 1px solid rgba(60,255,120,.3); color: #4dff8f; }
+    .auth-msg.show { display: block; }
+
+    /* Auth butonu */
+    .auth-btn {
+      width: 100%; padding: 14px;
+      background: var(--grad-hero);
+      border: none; border-radius: 10px;
+      color: #fff; font-family: var(--font-mono); font-size: .9rem; font-weight: 600;
+      cursor: pointer; margin-top: 8px;
+      transition: opacity .2s, transform .2s;
+    }
+    .auth-btn:hover  { opacity: .9; }
+    .auth-btn:active { transform: scale(.98); }
+    .auth-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    .auth-footer-link {
+      text-align: center; margin-top: 20px;
+      font-size: .8rem; color: var(--text-muted);
+    }
+    .auth-footer-link a { color: var(--c1); text-decoration: none; }
+
+    /* Giriş durumu */
+    .logged-in-box {
+      padding: 32px; text-align: center; display: none;
+    }
+    .logged-in-box.show { display: block; }
+    .logged-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--grad-hero);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; margin: 0 auto 16px;
+    }
+    .logged-name { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 6px; }
+    .logged-role { font-size: .75rem; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: .08em; margin-bottom: 24px; }
+    .logout-btn  {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 24px; border-radius: 8px;
+      border: 1px solid rgba(255,60,172,.35);
+      background: transparent; color: var(--c1);
+      font-family: var(--font-mono); font-size: .8rem; cursor: pointer;
+      transition: background .2s;
+    }
+    .logout-btn:hover { background: rgba(255,60,172,.1); }
+  </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<header>
+  <a href="../index.html" class="logo">Salih <span>G.</span></a>
+  <div class="header-right">
+    <nav>
+      <a href="../index.html"  data-num="01">Ana Sayfa</a>
+      <a href="about.html"     data-num="02">Hakkında</a>
+      <a href="projeler.html"  data-num="03">Projeler</a>
+      <a href="contact.html"   data-num="04">İletişim</a>
+    </nav>
+    <a href="auth.html" class="nav-auth-btn active" id="navAuthBtn" style="background:rgba(255,255,255,.1);color:var(--text)!important;">👤 Hesap</a>
+    <button class="theme-toggle" aria-label="Tema değiştir">
+      <span class="icon-moon">☽</span>
+      <span class="icon-sun">☀</span>
+    </button>
+    <button class="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <nav class="mobile-nav">
+      <a href="../index.html"  data-num="01">Ana Sayfa</a>
+      <a href="about.html"     data-num="02">Hakkında</a>
+      <a href="projeler.html"  data-num="03">Projeler</a>
+      <a href="contact.html"   data-num="04">İletişim</a>
+      <a href="auth.html" data-num="05" class="active">Hesap</a>
+    </nav>
+  </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<section class="auth-section">
+  <div class="auth-box">
+
+    <!-- Giriş Yapılmışsa -->
+    <div class="logged-in-box" id="loggedInBox">
+      <div class="logged-avatar">👤</div>
+      <div class="logged-name" id="loggedName">Kullanıcı</div>
+      <div class="logged-role" id="loggedRole">USER</div>
+      <a href="admin.html" class="hero-cta" id="adminLink" style="display:none;margin-bottom:12px;">
+        <span>Admin Paneli</span><span>→</span>
+      </a>
+      <button class="logout-btn" id="logoutBtn">Çıkış Yap ↩</button>
+    </div>
+
+    <!-- Sekmeler (giriş yapılmamışsa) -->
+    <div id="authForms">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Giriş Yap</button>
+        <button class="auth-tab" data-tab="register">Kayıt Ol</button>
+      </div>
+
+      <!-- GİRİŞ PANELİ -->
+      <div class="auth-panel active" id="panel-login">
+        <div class="auth-title">Tekrar <em style="font-style:normal;background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;color:transparent;">Hoş Geldiniz</em></div>
+        <div class="auth-sub">Hesabınıza giriş yapın.</div>
+
+        <!-- Admin test bilgileri -->
+        <div class="admin-hint">
+          <div class="admin-hint-title">🔑 Test Admin Hesabı</div>
+          <div><strong>E-posta:</strong> admin@portfolyo.com</div>
+          <div><strong>Şifre:</strong> admin123</div>
+          <button class="autofill-btn" onclick="
+            document.getElementById('login-email').value='admin@portfolyo.com';
+            document.getElementById('login-password').value='admin123';
+          ">⚡ Otomatik Doldur</button>
+        </div>
+
+        <div class="auth-msg" id="login-msg"></div>
+
+        <div class="form-group">
+          <label for="login-email">E-posta</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="login-email" placeholder="ornek@email.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Şifre</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+          </div>
+        </div>
+
+        <button class="auth-btn" id="loginBtn">Giriş Yap →</button>
+      </div>
+
+      <!-- KAYIT PANELİ -->
+      <div class="auth-panel" id="panel-register">
+        <div class="auth-title">Hesap <em style="font-style:normal;background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;color:transparent;">Oluştur</em></div>
+        <div class="auth-sub">Birkaç saniyede kayıt olun.</div>
+
+        <div class="auth-msg" id="register-msg"></div>
+
+        <div class="form-group">
+          <label for="reg-name">Ad Soyad</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input type="text" id="reg-name" placeholder="Adın Soyadın" autocomplete="name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-email">E-posta</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="reg-email" placeholder="ornek@email.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Şifre <small style="color:var(--text-dim)">(en az 6 karakter)</small></label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-password" placeholder="••••••••" autocomplete="new-password">
+          </div>
+        </div>
+
+        <button class="auth-btn" id="registerBtn">Kayıt Ol →</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Tüm Hakları Saklıdır.</span>
+  <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  // Sekme geçişi
+  document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.auth-tab, .auth-panel').forEach(el => el.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Oturum kontrolü (localStorage mock — gerçekte PHP session kullanılır)
+  const session = JSON.parse(localStorage.getItem('sg_session') || 'null');
+  if (session) showLoggedIn(session);
+
+  function showLoggedIn(user) {
+    document.getElementById('authForms').style.display = 'none';
+    const box = document.getElementById('loggedInBox');
+    box.classList.add('show');
+    document.getElementById('loggedName').textContent = user.name;
+    document.getElementById('loggedRole').textContent = user.role?.toUpperCase() || 'USER';
+    if (user.role === 'admin') {
+      document.getElementById('adminLink').style.display = 'inline-flex';
+    }
+  }
+
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = 'auth-msg ' + type + ' show';
+  }
+
+  // Giriş
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const btn   = document.getElementById('loginBtn');
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-password').value;
+    if (!email || !pass) { showMsg('login-msg', 'Tüm alanları doldurun.', 'error'); return; }
+
+    btn.disabled = true; btn.textContent = 'Giriş yapılıyor...';
+    try {
+      const res  = await fetch('../api/login.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: pass })
+      });
+      const data = await res.json();
+      if (data.success) {
+        localStorage.setItem('sg_session', JSON.stringify(data.user));
+        showMsg('login-msg', data.message, 'success');
+        setTimeout(() => showLoggedIn(data.user), 800);
+      } else {
+        showMsg('login-msg', data.error || 'Giriş başarısız.', 'error');
+      }
+    } catch {
+      showMsg('login-msg', 'Sunucuya bağlanılamadı. (PHP sunucusu gerekli)', 'error');
+    }
+    btn.disabled = false; btn.textContent = 'Giriş Yap →';
+  });
+
+  // Kayıt
+  document.getElementById('registerBtn').addEventListener('click', async () => {
+    const btn  = document.getElementById('registerBtn');
+    const name = document.getElementById('reg-name').value.trim();
+    const email= document.getElementById('reg-email').value.trim();
+    const pass = document.getElementById('reg-password').value;
+    if (!name || !email || !pass) { showMsg('register-msg', 'Tüm alanları doldurun.', 'error'); return; }
+
+    btn.disabled = true; btn.textContent = 'Kayıt yapılıyor...';
+    try {
+      const res  = await fetch('../api/register.php', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password: pass })
+      });
+      const data = await res.json();
+      if (data.success) {
+        localStorage.setItem('sg_session', JSON.stringify(data.user));
+        showMsg('register-msg', data.message, 'success');
+        setTimeout(() => showLoggedIn(data.user), 800);
+      } else {
+        const errMsg = data.errors ? data.errors.join(' ') : (data.error || 'Kayıt başarısız.');
+        showMsg('register-msg', errMsg, 'error');
+      }
+    } catch {
+      showMsg('register-msg', 'Sunucuya bağlanılamadı. (PHP sunucusu gerekli)', 'error');
+    }
+    btn.disabled = false; btn.textContent = 'Kayıt Ol →';
+  });
+
+  // Çıkış
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try { await fetch('../api/logout.php'); } catch {}
+    localStorage.removeItem('sg_session');
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>

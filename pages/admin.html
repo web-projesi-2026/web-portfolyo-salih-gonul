@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Paneli — Salih Gönül</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .admin-section { padding: 120px 0 80px; }
+    .admin-header  { margin-bottom: 40px; }
+    .admin-header h1 { font-family: var(--font-display); font-size: clamp(2rem,4vw,3rem); }
+    .admin-header p  { color: var(--text-muted); font-family: var(--font-mono); font-size: .82rem; }
+
+    .msg-table-wrapper { overflow-x: auto; }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: .82rem;
+    }
+    thead tr { border-bottom: 2px solid rgba(255,60,172,.3); }
+    th {
+      text-align: left; padding: 12px 16px;
+      font-family: var(--font-mono); font-size: .7rem;
+      letter-spacing: .1em; color: var(--c1);
+      text-transform: uppercase;
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      color: var(--text);
+    }
+    [data-theme="light"] td { border-color: rgba(0,0,0,.06); }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    [data-theme="light"] tr:hover td { background: rgba(0,0,0,.02); }
+
+    .unread-badge {
+      display: inline-block; padding: 2px 8px;
+      background: rgba(255,60,172,.15); border: 1px solid rgba(255,60,172,.3);
+      color: var(--c1); border-radius: 20px;
+      font-size: .65rem; font-family: var(--font-mono);
+    }
+    .read-badge {
+      display: inline-block; padding: 2px 8px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+      color: var(--text-dim); border-radius: 20px;
+      font-size: .65rem; font-family: var(--font-mono);
+    }
+    [data-theme="light"] .read-badge { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.08); }
+
+    .action-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 10px; border-radius: 6px; border: none;
+      font-family: var(--font-mono); font-size: .7rem; cursor: pointer;
+      transition: opacity .2s;
+    }
+    .action-btn:hover { opacity: .8; }
+    .btn-read   { background: rgba(60,180,255,.15); color: #3cbfff; }
+    .btn-delete { background: rgba(255,60,60,.15);  color: #ff6b6b; }
+
+    .msg-preview { max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-muted); }
+
+    .admin-stats { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+    .stat-card {
+      flex: 1; min-width: 120px;
+      background: var(--bg2); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    [data-theme="light"] .stat-card { border-color: rgba(0,0,0,.08); }
+    .stat-card .num { font-family: var(--font-display); font-size: 2rem; color: var(--c1); }
+    .stat-card .lbl { font-family: var(--font-mono); font-size: .72rem; color: var(--text-muted); margin-top: 4px; }
+
+    .empty-state { text-align: center; padding: 60px; color: var(--text-muted); font-family: var(--font-mono); font-size: .85rem; }
+    .empty-icon  { font-size: 2.5rem; margin-bottom: 12px; }
+
+    .admin-auth-guard { text-align: center; padding: 160px 24px; }
+    .admin-auth-guard h2 { font-family: var(--font-display); margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<header>
+  <a href="../index.html" class="logo">Salih <span>G.</span></a>
+  <div class="header-right">
+    <nav>
+      <a href="../index.html"  data-num="01">Ana Sayfa</a>
+      <a href="about.html"     data-num="02">Hakkında</a>
+      <a href="projeler.html"  data-num="03">Projeler</a>
+      <a href="contact.html"   data-num="04">İletişim</a>
+    </nav>
+    <a href="auth.html" class="nav-auth-btn" id="navAuthBtn">Giriş Yap</a>
+    <button class="theme-toggle" aria-label="Tema değiştir">
+      <span class="icon-moon">☽</span>
+      <span class="icon-sun">☀</span>
+    </button>
+    <button class="hamburger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <nav class="mobile-nav">
+      <a href="../index.html"  data-num="01">Ana Sayfa</a>
+      <a href="about.html"     data-num="02">Hakkında</a>
+      <a href="projeler.html"  data-num="03">Projeler</a>
+      <a href="contact.html"   data-num="04">İletişim</a>
+      <a href="auth.html" data-num="05">Giriş Yap</a>
+    </nav>
+  </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- Erişim engeli (JS tarafından gizlenir/gösterilir) -->
+<div class="admin-auth-guard" id="authGuard">
+  <div style="font-size:3rem;margin-bottom:16px;">🔒</div>
+  <h2>Erişim Kısıtlı</h2>
+  <p style="color:var(--text-muted);margin-bottom:24px;">Bu sayfayı görmek için admin hesabıyla giriş yapmanız gerekiyor.</p>
+  <a href="auth.html" class="hero-cta"><span>Giriş Yap</span><span>→</span></a>
+</div>
+
+<!-- Admin İçeriği -->
+<div class="admin-section container" id="adminContent" style="display:none;">
+  <div class="admin-header">
+    <h1>Admin <em style="font-style:normal;background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;color:transparent;">Paneli</em></h1>
+    <p>İletişim formu mesajlarını buradan yönetebilirsiniz.</p>
+  </div>
+
+  <div class="admin-stats">
+    <div class="stat-card">
+      <div class="num" id="stat-total">—</div>
+      <div class="lbl">Toplam Mesaj</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-unread">—</div>
+      <div class="lbl">Okunmamış</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-read">—</div>
+      <div class="lbl">Okunmuş</div>
+    </div>
+  </div>
+
+  <div class="msg-table-wrapper">
+    <table id="messages-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Ad Soyad</th>
+          <th>E-posta</th>
+          <th>Konu</th>
+          <th>Mesaj</th>
+          <th>Tarih</th>
+          <th>Durum</th>
+          <th>İşlem</th>
+        </tr>
+      </thead>
+      <tbody id="messages-body">
+        <tr><td colspan="8" class="empty-state"><div class="empty-icon">⏳</div>Yükleniyor...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Tüm Hakları Saklıdır.</span>
+  <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Başa Dön ↑</a>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  const session = JSON.parse(localStorage.getItem('sg_session') || 'null');
+
+  if (!session || session.role !== 'admin') {
+    document.getElementById('authGuard').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('authGuard').style.display   = 'none';
+  document.getElementById('adminContent').style.display = 'block';
+
+  loadMessages();
+
+  async function loadMessages() {
+    try {
+      const res  = await fetch('../api/messages.php');
+      const data = await res.json();
+      if (!data.success) { renderError(data.error); return; }
+      renderTable(data.data);
+    } catch {
+      renderError('API\'ye bağlanılamadı. PHP sunucusu gerekli.');
+    }
+  }
+
+  function renderTable(rows) {
+    const tbody = document.getElementById('messages-body');
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><div class="empty-icon">📭</div>Henüz hiç mesaj yok.</td></tr>';
+      setStats(0, 0, 0); return;
+    }
+
+    const unread = rows.filter(r => !r.is_read).length;
+    setStats(rows.length, unread, rows.length - unread);
+
+    tbody.innerHTML = rows.map((r, i) => `
+      <tr id="row-${r.id}">
+        <td style="color:var(--text-dim);font-family:var(--font-mono);">${i+1}</td>
+        <td><strong>${escHtml(r.name)}</strong></td>
+        <td><a href="mailto:${escHtml(r.email)}" style="color:var(--c1);text-decoration:none;">${escHtml(r.email)}</a></td>
+        <td>${escHtml(r.subject)}</td>
+        <td><div class="msg-preview" title="${escHtml(r.message)}">${escHtml(r.message)}</div></td>
+        <td style="white-space:nowrap;font-family:var(--font-mono);font-size:.75rem;color:var(--text-muted);">${r.tarih}</td>
+        <td>${r.is_read ? '<span class="read-badge">Okundu</span>' : '<span class="unread-badge">Yeni</span>'}</td>
+        <td style="white-space:nowrap;">
+          ${!r.is_read ? `<button class="action-btn btn-read" onclick="markRead(${r.id})">✓ Okundu</button> ` : ''}
+          <button class="action-btn btn-delete" onclick="deleteMsg(${r.id})">✕ Sil</button>
+        </td>
+      </tr>`).join('');
+  }
+
+  window.markRead = async function (id) {
+    try {
+      await fetch('../api/messages.php', {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      loadMessages();
+    } catch { alert('İşlem başarısız.'); }
+  };
+
+  window.deleteMsg = async function (id) {
+    if (!confirm('Bu mesajı silmek istediğinize emin misiniz?')) return;
+    try {
+      await fetch('../api/messages.php', {
+        method: 'DELETE', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      loadMessages();
+    } catch { alert('Silme başarısız.'); }
+  };
+
+  function setStats(total, unread, read) {
+    document.getElementById('stat-total').textContent  = total;
+    document.getElementById('stat-unread').textContent = unread;
+    document.getElementById('stat-read').textContent   = read;
+  }
+
+  function renderError(msg) {
+    document.getElementById('messages-body').innerHTML =
+      `<tr><td colspan="8" class="empty-state"><div class="empty-icon">⚠️</div>${msg}</td></tr>`;
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+})();
+</script>
+</body>
+</html>
